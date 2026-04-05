@@ -7,6 +7,7 @@ import threading
 
 app = Flask(__name__)
 SETTINGS_FILE = '/tmp/settings.json'
+PASSWORDS_FILE = '/tmp/passwords.json'
 
 def load_settings():
     if os.path.exists(SETTINGS_FILE):
@@ -20,11 +21,21 @@ def load_settings():
         'is_active': False
     }
 
-def save_settings(settings):
-    with open(SETTINGS_FILE, 'w') as f:
-        json.dump(settings, f)
+def load_passwords():
+    if os.path.exists(PASSWORDS_FILE):
+        with open(PASSWORDS_FILE, 'r') as f:
+            return json.load(f)
+    return {
+        'admin_code': 'RAGNAR-BOT',
+        'owner_code': 'RAGNAR-TOP1'
+    }
+
+def save_passwords(passwords):
+    with open(PASSWORDS_FILE, 'w') as f:
+        json.dump(passwords, f)
 
 settings = load_settings()
+passwords = load_passwords()
 bot_app = None
 polling_thread = None
 
@@ -32,9 +43,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = str(update.effective_user.id)
     
     if not settings['is_active']:
-        await update.message.reply_text(
-            "🤖 البوت غير مفعل\n🔐 أرسل كلمة السر للتفعيل:"
-        )
+        await update.message.reply_text("🤖 البوت غير مفعل\n🔐 أرسل كلمة السر للتفعيل:")
         context.user_data['awaiting_password'] = True
         return
     
@@ -62,6 +71,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         else:
             await update.message.reply_text("❌ كلمة سر خاطئة")
         context.user_data['awaiting_password'] = False
+
+def save_settings(settings_data):
+    with open(SETTINGS_FILE, 'w') as f:
+        json.dump(settings_data, f)
 
 def run_bot():
     global bot_app
@@ -101,6 +114,16 @@ def toggle_bot():
         thread.start()
     
     return jsonify({'is_active': settings['is_active']})
+
+@app.route('/api/change-passwords', methods=['POST'])
+def change_passwords():
+    data = request.json
+    if data.get('admin_code'):
+        passwords['admin_code'] = data['admin_code']
+    if data.get('owner_code'):
+        passwords['owner_code'] = data['owner_code']
+    save_passwords(passwords)
+    return jsonify({'success': True})
 
 if __name__ == '__main__':
     app.run()
