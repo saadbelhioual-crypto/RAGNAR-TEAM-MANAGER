@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAGNAR-BOT-MANAGER - لوحة التحكم</title>
+    <title>RAGNAR BOT - لوحة التحكم</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +12,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0a0a1f 0%, #1a0033 50%, #0d0d1a 100%);
+            background: linear-gradient(135deg, #0a0a1f 0%, #1a0033 50%, #0f0f2a 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
             display: flex;
@@ -23,20 +23,6 @@
         }
 
         body::before {
-            content: '⚔️ RAGNAR-BOT-MANAGER ⚔️';
-            position: fixed;
-            bottom: 10px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            color: rgba(255, 106, 0, 0.08);
-            font-size: 50px;
-            font-weight: bold;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        body::after {
             content: '';
             position: fixed;
             top: 0;
@@ -44,22 +30,20 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(255, 106, 0, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(123, 47, 247, 0.08) 0%, transparent 50%);
+                radial-gradient(circle at 20% 50%, rgba(255, 165, 0, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.05) 0%, transparent 50%);
             pointer-events: none;
         }
 
         .container {
-            background: rgba(10, 10, 30, 0.9);
+            background: rgba(10, 10, 30, 0.7);
             backdrop-filter: blur(20px);
             border-radius: 30px;
             padding: 40px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 106, 0, 0.3);
-            max-width: 650px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+            max-width: 600px;
             width: 100%;
             animation: fadeIn 0.5s ease-out;
-            z-index: 1;
         }
 
         @keyframes fadeIn {
@@ -73,42 +57,14 @@
             }
         }
 
-        .logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .logo h1 {
-            background: linear-gradient(135deg, #ff6a00, #ff3d00, #7b2ff7);
+        h1 {
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7, #ff6a00);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            font-size: 2em;
-            letter-spacing: 1px;
-        }
-
-        .logo .sub {
-            color: #ff6a00;
-            font-size: 0.8em;
-            margin-top: -5px;
-        }
-
-        .telegram-link {
             text-align: center;
             margin-bottom: 30px;
-            padding: 8px 16px;
-            background: rgba(0, 212, 255, 0.1);
-            border-radius: 50px;
-            display: inline-block;
-            width: auto;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .telegram-link a {
-            color: #00d4ff;
-            text-decoration: none;
-            font-weight: bold;
+            font-size: 2em;
         }
 
         .input-group {
@@ -117,7 +73,7 @@
 
         label {
             display: block;
-            color: #ff6a00;
+            color: #00d4ff;
             margin-bottom: 8px;
             font-weight: 500;
         }
@@ -125,7 +81,7 @@
         input {
             width: 100%;
             padding: 12px 16px;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.5);
             border: 1px solid #7b2ff7;
             border-radius: 12px;
             color: #fff;
@@ -142,7 +98,7 @@
         button {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #ff6a00, #7b2ff7);
+            background: linear-gradient(135deg, #7b2ff7, #ff6a00);
             border: none;
             border-radius: 12px;
             color: white;
@@ -154,7 +110,7 @@
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(255, 106, 0, 0.4);
+            box-shadow: 0 5px 20px rgba(123, 47, 247, 0.4);
         }
 
         .admin-panel {
@@ -164,17 +120,11 @@
         }
 
         .card {
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.4);
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 20px;
-            border: 1px solid rgba(255, 106, 0, 0.3);
-            transition: all 0.3s;
-        }
-
-        .card:hover {
-            border-color: #ff6a00;
-            box-shadow: 0 5px 15px rgba(255, 106, 0, 0.2);
+            border: 1px solid rgba(123, 47, 247, 0.3);
         }
 
         .stat {
@@ -182,18 +132,15 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px;
-            background: rgba(255, 106, 0, 0.1);
+            background: rgba(0, 212, 255, 0.1);
             border-radius: 12px;
             margin-bottom: 10px;
         }
 
         .stat-value {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: bold;
-            background: linear-gradient(135deg, #ff6a00, #00d4ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: #ff6a00;
         }
 
         .warning {
@@ -226,7 +173,6 @@
             border-radius: 12px;
             animation: slideIn 0.3s;
             z-index: 1000;
-            font-weight: bold;
         }
 
         @keyframes slideIn {
@@ -239,10 +185,8 @@
         }
 
         h3 {
-            color: #ff6a00;
+            color: #00d4ff;
             margin-bottom: 15px;
-            border-right: 3px solid #ff6a00;
-            padding-right: 10px;
         }
 
         .logout-btn {
@@ -250,17 +194,11 @@
             margin-top: 20px;
         }
 
-        .info-text {
-            color: #7b2ff7;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
         .footer {
             text-align: center;
             margin-top: 30px;
             padding-top: 20px;
-            border-top: 1px solid rgba(255, 106, 0, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 12px;
             color: #666;
         }
@@ -273,23 +211,14 @@
 </head>
 <body>
     <div class="container" id="app">
-        <div class="logo">
-            <h1>🪓 RAGNAR-BOT-MANAGER 🐺</h1>
-            <div class="sub">نظام إدارة البوتات المتقدم</div>
-        </div>
-        
-        <div style="text-align: center; margin-bottom: 20px;">
-            <div class="telegram-link">
-                📢 TELEGRAM : <a href="https://t.me/X1R_RAGNAR" target="_blank">@X1R_RAGNAR</a>
-            </div>
-        </div>
+        <h1>🪓 RAGNAR BOT 🐺</h1>
         
         <div id="loginSection">
             <div class="input-group">
-                <label>🔐 ADMIN CODE</label>
+                <label>🔐 Admin Code</label>
                 <input type="password" id="adminCode" placeholder="أدخل كود المشرف">
             </div>
-            <button onclick="verifyAdmin()">⚔️ دخول إلى لوحة التحكم ⚔️</button>
+            <button onclick="verifyAdmin()">🚀 دخول</button>
         </div>
 
         <div id="adminPanel" class="admin-panel">
@@ -303,48 +232,36 @@
                     <span>🎯 الحد الأقصى للمستخدمين:</span>
                     <span class="stat-value" id="maxUsers">0</span>
                 </div>
-                <div class="stat">
-                    <span>📈 نسبة الاستخدام:</span>
-                    <span class="stat-value" id="usagePercentage">0%</span>
-                </div>
             </div>
 
             <div class="card">
                 <h3>⚙️ إعدادات البوت</h3>
                 <div class="input-group">
                     <label>🤖 Bot Token</label>
-                    <input type="text" id="botToken" placeholder="أدخل توكن البوت من @BotFather">
-                    <div class="info-text">💡 احصل على التوكن من @BotFather في تيليجرام</div>
+                    <input type="text" id="botToken" placeholder="أدخل توكن البوت">
                 </div>
                 <div class="input-group">
-                    <label>🔑 كلمة سر التفعيل (للمستخدمين)</label>
-                    <input type="text" id="adminPassword" placeholder="كلمة سر التفعيل للمستخدمين">
-                    <div class="info-text">💡 المستخدمون سيستخدمون هذه الكلمة لتفعيل البوت</div>
+                    <label>👑 Admin Password (كلمة سر التفعيل)</label>
+                    <input type="text" id="adminPassword" placeholder="كلمة سر التفعيل">
                 </div>
                 <div class="input-group">
                     <label>📊 الحد الأقصى للمستخدمين</label>
-                    <input type="number" id="maxUsersInput" placeholder="مثال: 50">
+                    <input type="number" id="maxUsersInput" placeholder="مثال: 20">
                 </div>
                 <button onclick="updateSettings()">💾 حفظ الإعدادات</button>
             </div>
 
             <div class="card">
                 <h3>🔧 إدارة البوت</h3>
-                <button onclick="toggleBot()" id="toggleBotBtn">▶️ تفعيل البوت</button>
+                <button onclick="toggleBot()" id="toggleBotBtn">✅ تفعيل البوت</button>
                 <div class="warning" id="botStatus"></div>
-                <div class="info-text" style="margin-top: 10px;">
-                    ⚠️ ملاحظة: البوت لن يعمل إلا بعد:
-                    <br>1. إضافة التوكن الصحيح
-                    <br>2. تفعيل البوت من هنا
-                    <br>3. المستخدمون سيحتاجون كلمة السر للتفعيل
-                </div>
             </div>
 
-            <button class="logout-btn" onclick="logout()">🚪 خروج من لوحة التحكم</button>
+            <button class="logout-btn" onclick="logout()">🚪 خروج</button>
         </div>
-        
+
         <div class="footer">
-            🐺 RAGNAR-BOT-MANAGER | جميع الحقوق محفوظة © 2025
+            @X1R_RAGNAR | RAGNAR BOT
         </div>
     </div>
 
@@ -367,7 +284,7 @@
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('adminPanel').style.display = 'block';
                 await loadSettings();
-                showMessage('✅ تم الدخول بنجاح إلى لوحة التحكم', 'success');
+                showMessage('✅ تم الدخول بنجاح', 'success');
             } else {
                 showMessage('❌ كود المشرف غير صحيح', 'error');
             }
@@ -378,31 +295,20 @@
                 const response = await fetch('/api/get-settings');
                 const data = await response.json();
                 document.getElementById('botToken').value = data.token || '';
-                document.getElementById('adminPassword').value = data.admin_password || 'X1R_RAGNAR';
-                document.getElementById('maxUsersInput').value = data.max_users || 100;
+                document.getElementById('adminPassword').value = data.admin_password || '';
+                document.getElementById('maxUsersInput').value = data.max_users || 20;
                 document.getElementById('activeUsers').textContent = data.active_users || 0;
-                document.getElementById('maxUsers').textContent = data.max_users || 100;
-                
-                const percentage = ((data.active_users / data.max_users) * 100).toFixed(1);
-                document.getElementById('usagePercentage').textContent = `${percentage}%`;
-                
+                document.getElementById('maxUsers').textContent = data.max_users || 20;
                 botActive = data.is_active || false;
                 updateBotStatus();
             } catch (error) {
                 console.error('Error loading settings:', error);
-                showMessage('❌ فشل في تحميل الإعدادات', 'error');
             }
         }
 
         async function updateSettings() {
-            const token = document.getElementById('botToken').value;
-            if (!token) {
-                showMessage('⚠️ الرجاء إدخال توكن البوت', 'error');
-                return;
-            }
-            
             const settings = {
-                token: token,
+                token: document.getElementById('botToken').value,
                 admin_password: document.getElementById('adminPassword').value,
                 max_users: parseInt(document.getElementById('maxUsersInput').value)
             };
@@ -417,11 +323,9 @@
                 if (response.ok) {
                     showMessage('✅ تم تحديث الإعدادات بنجاح', 'success');
                     await loadSettings();
-                } else {
-                    showMessage('❌ فشل في تحديث الإعدادات', 'error');
                 }
             } catch (error) {
-                showMessage('❌ خطأ في الاتصال بالخادم', 'error');
+                showMessage('❌ فشل في تحديث الإعدادات', 'error');
             }
         }
 
@@ -433,17 +337,7 @@
                 const data = await response.json();
                 botActive = data.is_active;
                 updateBotStatus();
-                
-                if (botActive) {
-                    const token = document.getElementById('botToken').value;
-                    if (token) {
-                        showMessage('✅ تم تفعيل البوت بنجاح! يمكن للمستخدمين الآن استخدامه', 'success');
-                    } else {
-                        showMessage('⚠️ البوت مفعل لكن لا يوجد توكن! الرجاء إضافة التوكن أولاً', 'warning');
-                    }
-                } else {
-                    showMessage('⏸️ تم تعطيل البوت', 'success');
-                }
+                showMessage(`✅ البوت ${botActive ? 'مفعل' : 'معطل'}`, 'success');
             } catch (error) {
                 showMessage('❌ فشل في تغيير حالة البوت', 'error');
             }
@@ -452,21 +346,13 @@
         function updateBotStatus() {
             const statusDiv = document.getElementById('botStatus');
             const toggleBtn = document.getElementById('toggleBotBtn');
-            const token = document.getElementById('botToken').value;
             
-            if (botActive && token) {
-                statusDiv.innerHTML = '🟢 <strong>البوت مفعل ويعمل بشكل طبيعي</strong><br>✅ المستخدمون يمكنهم التفعيل باستخدام كلمة السر';
-                statusDiv.className = 'warning success';
-                toggleBtn.textContent = '⏸️ تعطيل البوت';
-                toggleBtn.style.background = 'linear-gradient(135deg, #ff6a00, #ff0000)';
-            } else if (botActive && !token) {
-                statusDiv.innerHTML = '⚠️ <strong>البوت مفعل لكن لا يوجد توكن!</strong><br>❌ الرجاء إضافة توكن البوت أولاً';
-                statusDiv.className = 'warning error';
+            if (botActive) {
+                statusDiv.innerHTML = '🟢 البوت مفعل ويعمل بشكل طبيعي';
                 toggleBtn.textContent = '⏸️ تعطيل البوت';
                 toggleBtn.style.background = 'linear-gradient(135deg, #ff6a00, #ff0000)';
             } else {
-                statusDiv.innerHTML = '🔴 <strong>البوت معطل</strong><br>⏩ قم بتفعيل البوت بعد إضافة التوكن الصحيح';
-                statusDiv.className = 'warning';
+                statusDiv.innerHTML = '🔴 البوت معطل - قم بتفعيله لبدء العمل';
                 toggleBtn.textContent = '▶️ تفعيل البوت';
                 toggleBtn.style.background = 'linear-gradient(135deg, #00d4ff, #7b2ff7)';
             }
@@ -477,14 +363,8 @@
             document.getElementById('loginSection').style.display = 'block';
             document.getElementById('adminPanel').style.display = 'none';
             document.getElementById('adminCode').value = '';
-            showMessage('👋 تم تسجيل الخروج بنجاح', 'success');
+            showMessage('👋 تم تسجيل الخروج', 'success');
         }
-
-        setInterval(() => {
-            if (adminAuthenticated) {
-                loadSettings();
-            }
-        }, 5000);
     </script>
 </body>
 </html>
