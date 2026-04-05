@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAGNAR BOT - لوحة التحكم</title>
+    <title>RAGNAR BOT - نظام الإدارة المتقدم</title>
     <style>
         * {
             margin: 0;
@@ -23,49 +23,62 @@
         }
 
         body::before {
-            content: '';
+            content: '⚔️ RAGNAR SYSTEM ⚔️';
             position: fixed;
-            top: 0;
+            bottom: 10px;
             left: 0;
             right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(255, 165, 0, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.05) 0%, transparent 50%);
+            text-align: center;
+            color: rgba(255, 106, 0, 0.05);
+            font-size: 40px;
+            font-weight: bold;
             pointer-events: none;
         }
 
         .container {
-            background: rgba(10, 10, 30, 0.7);
+            background: rgba(10, 10, 30, 0.85);
             backdrop-filter: blur(20px);
             border-radius: 30px;
             padding: 40px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
-            max-width: 600px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 106, 0, 0.2);
+            max-width: 700px;
             width: 100%;
             animation: fadeIn 0.5s ease-out;
+            z-index: 1;
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         h1 {
-            background: linear-gradient(135deg, #00d4ff, #7b2ff7, #ff6a00);
+            background: linear-gradient(135deg, #ff6a00, #ff3d00, #7b2ff7);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             font-size: 2em;
         }
+
+        .subtitle {
+            text-align: center;
+            color: #ff6a00;
+            margin-bottom: 30px;
+            font-size: 0.8em;
+        }
+
+        .level-badge {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 5px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .level-owner { background: rgba(255, 106, 0, 0.2); color: #ff6a00; }
+        .level-admin { background: rgba(0, 212, 255, 0.2); color: #00d4ff; }
 
         .input-group {
             margin-bottom: 20px;
@@ -81,7 +94,7 @@
         input {
             width: 100%;
             padding: 12px 16px;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             border: 1px solid #7b2ff7;
             border-radius: 12px;
             color: #fff;
@@ -105,34 +118,40 @@
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s;
         }
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(123, 47, 247, 0.4);
+            box-shadow: 0 5px 20px rgba(255, 106, 0, 0.4);
         }
 
-        .admin-panel {
+        .admin-panel, .owner-panel {
             display: none;
             margin-top: 30px;
             animation: fadeIn 0.5s;
         }
 
         .card {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 20px;
-            border: 1px solid rgba(123, 47, 247, 0.3);
+            border: 1px solid rgba(255, 106, 0, 0.3);
+        }
+
+        .card h3 {
+            color: #ff6a00;
+            margin-bottom: 15px;
+            border-right: 3px solid #ff6a00;
+            padding-right: 10px;
         }
 
         .stat {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             padding: 12px;
-            background: rgba(0, 212, 255, 0.1);
+            background: rgba(255, 106, 0, 0.1);
             border-radius: 12px;
             margin-bottom: 10px;
         }
@@ -176,17 +195,8 @@
         }
 
         @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-            }
-            to {
-                transform: translateX(0);
-            }
-        }
-
-        h3 {
-            color: #00d4ff;
-            margin-bottom: 15px;
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
         }
 
         .logout-btn {
@@ -203,25 +213,31 @@
             color: #666;
         }
 
-        .footer a {
-            color: #ff6a00;
-            text-decoration: none;
+        .info-text {
+            color: #7b2ff7;
+            font-size: 12px;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
     <div class="container" id="app">
         <h1>🪓 RAGNAR BOT 🐺</h1>
+        <div class="subtitle">نظام إدارة البوتات المتقدم</div>
         
+        <!-- شاشة تسجيل الدخول -->
         <div id="loginSection">
             <div class="input-group">
-                <label>🔐 Admin Code</label>
-                <input type="password" id="adminCode" placeholder="أدخل كود المشرف">
+                <label>🔐 كلمة السر</label>
+                <input type="password" id="accessCode" placeholder="أدخل كلمة السر">
             </div>
-            <button onclick="verifyAdmin()">🚀 دخول</button>
+            <button onclick="verifyAccess()">⚔️ دخول ⚔️</button>
         </div>
 
+        <!-- لوحة تحكم المدير -->
         <div id="adminPanel" class="admin-panel">
+            <div class="level-badge level-admin">👑 مستوى الدخول: مدير (ADMIN)</div>
+            
             <div class="card">
                 <h3>📊 إحصائيات البوت</h3>
                 <div class="stat">
@@ -229,8 +245,12 @@
                     <span class="stat-value" id="activeUsers">0</span>
                 </div>
                 <div class="stat">
-                    <span>🎯 الحد الأقصى للمستخدمين:</span>
+                    <span>🎯 الحد الأقصى:</span>
                     <span class="stat-value" id="maxUsers">0</span>
+                </div>
+                <div class="stat">
+                    <span>📈 نسبة الاستخدام:</span>
+                    <span class="stat-value" id="usagePercentage">0%</span>
                 </div>
             </div>
 
@@ -241,32 +261,89 @@
                     <input type="text" id="botToken" placeholder="أدخل توكن البوت">
                 </div>
                 <div class="input-group">
-                    <label>👑 Admin Password (كلمة سر التفعيل)</label>
-                    <input type="text" id="adminPassword" placeholder="كلمة سر التفعيل">
+                    <label>🔑 كلمة سر التفعيل (للمستخدمين)</label>
+                    <input type="text" id="userPassword" placeholder="كلمة سر التفعيل">
                 </div>
                 <div class="input-group">
                     <label>📊 الحد الأقصى للمستخدمين</label>
-                    <input type="number" id="maxUsersInput" placeholder="مثال: 20">
+                    <input type="number" id="maxUsersInput" placeholder="مثال: 100">
                 </div>
-                <button onclick="updateSettings()">💾 حفظ الإعدادات</button>
+                <button onclick="updateBotSettings()">💾 حفظ إعدادات البوت</button>
             </div>
 
             <div class="card">
                 <h3>🔧 إدارة البوت</h3>
-                <button onclick="toggleBot()" id="toggleBotBtn">✅ تفعيل البوت</button>
+                <button onclick="toggleBot()" id="toggleBotBtn">▶️ تفعيل البوت</button>
                 <div class="warning" id="botStatus"></div>
             </div>
 
             <button class="logout-btn" onclick="logout()">🚪 خروج</button>
         </div>
 
+        <!-- لوحة تحكم المالك -->
+        <div id="ownerPanel" class="admin-panel">
+            <div class="level-badge level-owner">👑 مستوى الدخول: المالك (OWNER)</div>
+            
+            <div class="card">
+                <h3>🔐 تغيير كلمات السر</h3>
+                <div class="input-group">
+                    <label>👑 كلمة سر المدير الجديدة (ADMIN)</label>
+                    <input type="text" id="newAdminCode" placeholder="كلمة سر جديدة للمدير">
+                    <div class="info-text">📌 حالياً: RAGNAR-BOT</div>
+                </div>
+                <div class="input-group">
+                    <label>⭐ كلمة سر المالك الجديدة (OWNER)</label>
+                    <input type="text" id="newOwnerCode" placeholder="كلمة سر جديدة للمالك">
+                    <div class="info-text">📌 حالياً: RAGNAR-TOP1</div>
+                </div>
+                <button onclick="changePasswords()">💾 تغيير كلمات السر</button>
+            </div>
+
+            <div class="card">
+                <h3>📊 إحصائيات البوت</h3>
+                <div class="stat">
+                    <span>👥 المستخدمون المفعلون:</span>
+                    <span class="stat-value" id="ownerActiveUsers">0</span>
+                </div>
+                <div class="stat">
+                    <span>🎯 الحد الأقصى:</span>
+                    <span class="stat-value" id="ownerMaxUsers">0</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>⚙️ إعدادات البوت</h3>
+                <div class="input-group">
+                    <label>🤖 Bot Token</label>
+                    <input type="text" id="ownerBotToken" placeholder="أدخل توكن البوت">
+                </div>
+                <div class="input-group">
+                    <label>🔑 كلمة سر التفعيل (للمستخدمين)</label>
+                    <input type="text" id="ownerUserPassword" placeholder="كلمة سر التفعيل">
+                </div>
+                <div class="input-group">
+                    <label>📊 الحد الأقصى للمستخدمين</label>
+                    <input type="number" id="ownerMaxUsersInput" placeholder="مثال: 100">
+                </div>
+                <button onclick="updateOwnerBotSettings()">💾 حفظ إعدادات البوت</button>
+            </div>
+
+            <div class="card">
+                <h3>🔧 إدارة البوت</h3>
+                <button onclick="toggleOwnerBot()" id="ownerToggleBotBtn">▶️ تفعيل البوت</button>
+                <div class="warning" id="ownerBotStatus"></div>
+            </div>
+
+            <button class="logout-btn" onclick="logout()">🚪 خروج</button>
+        </div>
+
         <div class="footer">
-            @X1R_RAGNAR | RAGNAR BOT
+            @X1R_RAGNAR | RAGNAR SYSTEM
         </div>
     </div>
 
     <script>
-        let adminAuthenticated = false;
+        let currentLevel = null;
         let botActive = false;
 
         function showMessage(text, type) {
@@ -277,39 +354,61 @@
             setTimeout(() => msgDiv.remove(), 3000);
         }
 
-        async function verifyAdmin() {
-            const code = document.getElementById('adminCode').value;
+        async function verifyAccess() {
+            const code = document.getElementById('accessCode').value;
+            
+            // التحقق من المالك أولاً
+            if (code === 'RAGNAR-TOP1') {
+                currentLevel = 'owner';
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('ownerPanel').style.display = 'block';
+                await loadOwnerSettings();
+                showMessage('✅ مرحباً أيها المالك! تم الدخول بنجاح', 'success');
+                return;
+            }
+            
+            // التحقق من المدير
             if (code === 'RAGNAR-BOT') {
-                adminAuthenticated = true;
+                currentLevel = 'admin';
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('adminPanel').style.display = 'block';
-                await loadSettings();
-                showMessage('✅ تم الدخول بنجاح', 'success');
-            } else {
-                showMessage('❌ كود المشرف غير صحيح', 'error');
+                await loadAdminSettings();
+                showMessage('✅ تم الدخول كمدير', 'success');
+                return;
             }
+            
+            showMessage('❌ كلمة السر غير صحيحة', 'error');
         }
 
-        async function loadSettings() {
+        // ========== دوال المدير ==========
+        async function loadAdminSettings() {
             try {
                 const response = await fetch('/api/get-settings');
                 const data = await response.json();
                 document.getElementById('botToken').value = data.token || '';
-                document.getElementById('adminPassword').value = data.admin_password || '';
-                document.getElementById('maxUsersInput').value = data.max_users || 20;
+                document.getElementById('userPassword').value = data.admin_password || '';
+                document.getElementById('maxUsersInput').value = data.max_users || 100;
                 document.getElementById('activeUsers').textContent = data.active_users || 0;
-                document.getElementById('maxUsers').textContent = data.max_users || 20;
+                document.getElementById('maxUsers').textContent = data.max_users || 100;
+                const percentage = ((data.active_users / data.max_users) * 100).toFixed(1);
+                document.getElementById('usagePercentage').textContent = `${percentage}%`;
                 botActive = data.is_active || false;
-                updateBotStatus();
+                updateAdminBotStatus();
             } catch (error) {
-                console.error('Error loading settings:', error);
+                showMessage('❌ فشل في تحميل الإعدادات', 'error');
             }
         }
 
-        async function updateSettings() {
+        async function updateBotSettings() {
+            const token = document.getElementById('botToken').value;
+            if (!token) {
+                showMessage('⚠️ الرجاء إدخال توكن البوت', 'error');
+                return;
+            }
+            
             const settings = {
-                token: document.getElementById('botToken').value,
-                admin_password: document.getElementById('adminPassword').value,
+                token: token,
+                admin_password: document.getElementById('userPassword').value,
                 max_users: parseInt(document.getElementById('maxUsersInput').value)
             };
 
@@ -319,10 +418,9 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(settings)
                 });
-                
                 if (response.ok) {
                     showMessage('✅ تم تحديث الإعدادات بنجاح', 'success');
-                    await loadSettings();
+                    await loadAdminSettings();
                 }
             } catch (error) {
                 showMessage('❌ فشل في تحديث الإعدادات', 'error');
@@ -331,40 +429,142 @@
 
         async function toggleBot() {
             try {
-                const response = await fetch('/api/toggle-bot', {
-                    method: 'POST'
-                });
+                const response = await fetch('/api/toggle-bot', { method: 'POST' });
                 const data = await response.json();
                 botActive = data.is_active;
-                updateBotStatus();
+                updateAdminBotStatus();
                 showMessage(`✅ البوت ${botActive ? 'مفعل' : 'معطل'}`, 'success');
             } catch (error) {
                 showMessage('❌ فشل في تغيير حالة البوت', 'error');
             }
         }
 
-        function updateBotStatus() {
+        function updateAdminBotStatus() {
             const statusDiv = document.getElementById('botStatus');
             const toggleBtn = document.getElementById('toggleBotBtn');
-            
             if (botActive) {
-                statusDiv.innerHTML = '🟢 البوت مفعل ويعمل بشكل طبيعي';
+                statusDiv.innerHTML = '🟢 البوت مفعل ويعمل';
                 toggleBtn.textContent = '⏸️ تعطيل البوت';
                 toggleBtn.style.background = 'linear-gradient(135deg, #ff6a00, #ff0000)';
             } else {
-                statusDiv.innerHTML = '🔴 البوت معطل - قم بتفعيله لبدء العمل';
+                statusDiv.innerHTML = '🔴 البوت معطل';
                 toggleBtn.textContent = '▶️ تفعيل البوت';
                 toggleBtn.style.background = 'linear-gradient(135deg, #00d4ff, #7b2ff7)';
             }
         }
 
+        // ========== دوال المالك ==========
+        async function loadOwnerSettings() {
+            try {
+                const response = await fetch('/api/get-settings');
+                const data = await response.json();
+                document.getElementById('ownerBotToken').value = data.token || '';
+                document.getElementById('ownerUserPassword').value = data.admin_password || '';
+                document.getElementById('ownerMaxUsersInput').value = data.max_users || 100;
+                document.getElementById('ownerActiveUsers').textContent = data.active_users || 0;
+                document.getElementById('ownerMaxUsers').textContent = data.max_users || 100;
+                botActive = data.is_active || false;
+                updateOwnerBotStatus();
+            } catch (error) {
+                showMessage('❌ فشل في تحميل الإعدادات', 'error');
+            }
+        }
+
+        async function updateOwnerBotSettings() {
+            const token = document.getElementById('ownerBotToken').value;
+            if (!token) {
+                showMessage('⚠️ الرجاء إدخال توكن البوت', 'error');
+                return;
+            }
+            
+            const settings = {
+                token: token,
+                admin_password: document.getElementById('ownerUserPassword').value,
+                max_users: parseInt(document.getElementById('ownerMaxUsersInput').value)
+            };
+
+            try {
+                const response = await fetch('/api/update-settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(settings)
+                });
+                if (response.ok) {
+                    showMessage('✅ تم تحديث الإعدادات بنجاح', 'success');
+                    await loadOwnerSettings();
+                }
+            } catch (error) {
+                showMessage('❌ فشل في تحديث الإعدادات', 'error');
+            }
+        }
+
+        async function toggleOwnerBot() {
+            try {
+                const response = await fetch('/api/toggle-bot', { method: 'POST' });
+                const data = await response.json();
+                botActive = data.is_active;
+                updateOwnerBotStatus();
+                showMessage(`✅ البوت ${botActive ? 'مفعل' : 'معطل'}`, 'success');
+            } catch (error) {
+                showMessage('❌ فشل في تغيير حالة البوت', 'error');
+            }
+        }
+
+        function updateOwnerBotStatus() {
+            const statusDiv = document.getElementById('ownerBotStatus');
+            const toggleBtn = document.getElementById('ownerToggleBotBtn');
+            if (botActive) {
+                statusDiv.innerHTML = '🟢 البوت مفعل ويعمل';
+                toggleBtn.textContent = '⏸️ تعطيل البوت';
+            } else {
+                statusDiv.innerHTML = '🔴 البوت معطل';
+                toggleBtn.textContent = '▶️ تفعيل البوت';
+            }
+        }
+
+        async function changePasswords() {
+            const newAdminCode = document.getElementById('newAdminCode').value;
+            const newOwnerCode = document.getElementById('newOwnerCode').value;
+            
+            if (!newAdminCode && !newOwnerCode) {
+                showMessage('⚠️ الرجاء إدخال كلمة سر جديدة', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/change-passwords', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        admin_code: newAdminCode,
+                        owner_code: newOwnerCode
+                    })
+                });
+                if (response.ok) {
+                    showMessage('✅ تم تغيير كلمات السر بنجاح', 'success');
+                    document.getElementById('newAdminCode').value = '';
+                    document.getElementById('newOwnerCode').value = '';
+                } else {
+                    showMessage('❌ فشل في تغيير كلمات السر', 'error');
+                }
+            } catch (error) {
+                showMessage('❌ خطأ في الاتصال', 'error');
+            }
+        }
+
         function logout() {
-            adminAuthenticated = false;
+            currentLevel = null;
             document.getElementById('loginSection').style.display = 'block';
             document.getElementById('adminPanel').style.display = 'none';
-            document.getElementById('adminCode').value = '';
+            document.getElementById('ownerPanel').style.display = 'none';
+            document.getElementById('accessCode').value = '';
             showMessage('👋 تم تسجيل الخروج', 'success');
         }
+
+        setInterval(() => {
+            if (currentLevel === 'admin') loadAdminSettings();
+            if (currentLevel === 'owner') loadOwnerSettings();
+        }, 5000);
     </script>
 </body>
 </html>
